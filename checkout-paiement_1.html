@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paiement — Maison Delorme</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#1B4B82; --blue-dark:#163d6e; --blue-light:#e8f0fb; --blue-mid:#2d6bb5;
+    --pink:#e91e8c; --gray-bg:#f5f6f8; --gray-border:#e2e6ec; --gray-text:#6b7280;
+    --gray-light:#f0f2f5; --text:#1a1f2e; --white:#ffffff; --green:#16a34a;
+    --shadow:0 4px 24px rgba(27,75,130,0.12); --radius:8px; --radius-lg:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"DM Sans",sans-serif;background:var(--gray-bg);color:var(--text);font-size:14px;line-height:1.6;overflow-x:hidden;}
+
+  /* ── ANNOUNCEMENT BAR ── */
+  .ann-bar{background:var(--text);height:38px;display:flex;align-items:center;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .ann-slider{flex:1;overflow:hidden;height:38px;}
+  .ann-track{display:flex;flex-direction:column;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);}
+  .ann-slide{height:38px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 48px;white-space:nowrap;flex-shrink:0;font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:0.03em;}
+  .ann-slide strong{color:var(--white);font-weight:700;}
+  .ann-close{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:rgba(255,255,255,0.3);z-index:2;line-height:1;padding:4px;}
+  .ann-close:hover{color:rgba(255,255,255,0.7);}
+
+  /* ── HEADER ── */
+  .site-header{background:var(--white);border-bottom:1px solid var(--gray-border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,75,130,0.07);}
+  .header-top{display:flex;align-items:center;padding:12px 48px;gap:28px;}
+  .header-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;}
+  .logo-mark{width:44px;height:44px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-family:"DM Serif Display",serif;font-size:22px;font-style:italic;flex-shrink:0;}
+  .logo-text{display:flex;flex-direction:column;line-height:1;}
+  .logo-name{font-family:"DM Serif Display",serif;font-size:18px;color:var(--text);letter-spacing:-0.3px;}
+  .logo-sub{font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gray-text);}
+  .header-search{flex:1;max-width:500px;margin:0 auto;position:relative;}
+  .header-search input{width:100%;height:44px;border:2px solid var(--gray-border);border-radius:22px;padding:0 50px 0 20px;font-size:13px;font-family:"DM Sans",sans-serif;outline:none;background:var(--gray-bg);transition:all 0.2s;}
+  .header-search input:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(27,75,130,0.08);}
+  .header-search input::placeholder{color:#b0bac8;}
+  .search-btn{position:absolute;right:6px;top:6px;width:32px;height:32px;background:var(--blue);border:none;border-radius:50%;cursor:pointer;color:white;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+  .search-btn:hover{background:var(--blue-dark);}
+  .header-actions{display:flex;align-items:center;gap:24px;flex-shrink:0;}
+  .header-cart{position:relative;text-decoration:none;color:var(--text);font-size:24px;transition:transform 0.15s;}
+  .header-cart:hover{transform:scale(1.1);}
+  .cart-badge{position:absolute;top:-7px;right:-9px;width:20px;height:20px;background:var(--pink);color:white;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .header-user{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);}
+  .user-info{display:flex;flex-direction:column;}
+  .user-greeting{font-size:11px;color:var(--gray-text);}
+  .user-label{font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;}
+  .header-nav{border-top:1px solid var(--gray-border);padding:0 48px;display:flex;align-items:center;}
+  .nav-item{padding:14px 20px;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text);text-decoration:none;border-bottom:3px solid transparent;transition:all 0.15s;white-space:nowrap;}
+  .nav-item:hover{color:var(--blue);border-bottom-color:var(--blue);}
+
+  /* ── STEPPER ── */
+  .stepper-bar{background:var(--white);border-bottom:1px solid var(--gray-border);padding:16px 48px;}
+  .stepper{display:flex;align-items:center;max-width:600px;margin:0 auto;}
+  .step{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;}
+  .step-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--gray-border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gray-text);transition:all 0.2s;}
+  .step.done .step-circle{background:var(--blue-light);border-color:var(--blue);color:var(--blue);}
+  .step.active .step-circle{background:var(--blue);border-color:var(--blue);color:white;}
+  .step-label{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--gray-text);}
+  .step.active .step-label,.step.done .step-label{color:var(--blue);}
+  .step-line{flex:1;height:2px;background:var(--gray-border);margin-bottom:22px;}
+  .step-line.done{background:var(--blue);}
+
+  /* ── PAGE ── */
+  .page-wrap{max-width:760px;margin:0 auto;padding:32px 24px 64px;}
+  .page-title{font-family:"DM Serif Display",serif;font-size:26px;color:var(--text);margin-bottom:4px;letter-spacing:-0.4px;}
+  .page-subtitle{font-size:12.5px;color:var(--gray-text);margin-bottom:24px;}
+
+  /* ── CARD ── */
+  .card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--gray-border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;animation:slideDown 0.2s ease;}
+  .card-header{background:var(--gray-light);border-bottom:1px solid var(--gray-border);padding:10px 20px;display:flex;align-items:center;gap:10px;}
+  .card-header-title{font-size:11px;font-weight:800;letter-spacing:0.09em;text-transform:uppercase;color:var(--text);}
+  .card-body{padding:20px;}
+
+  /* ── ORDER SUMMARY ── */
+  .order-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--gray-border);}
+  .order-row:last-of-type{border-bottom:none;}
+  .order-row .lbl{color:var(--gray-text);}
+  .order-row .val{font-weight:600;}
+  .order-total{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--blue);border-radius:var(--radius);margin-top:12px;}
+  .order-total .lbl{font-size:12px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:0.06em;}
+  .order-total .val{font-size:20px;font-weight:700;color:white;font-family:"DM Serif Display",serif;}
+
+  /* ── PAYMENT OPTIONS ── */
+  .payment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .payment-option{border:2px solid var(--gray-border);border-radius:var(--radius-lg);padding:22px 16px;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;position:relative;background:var(--white);}
+  .payment-option:hover{border-color:var(--blue);background:var(--blue-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(27,75,130,0.12);}
+  .payment-option.selected{border-color:var(--blue);background:var(--blue-light);box-shadow:0 0 0 3px rgba(27,75,130,0.1);}
+  .payment-option.selected::after{content:"✓";position:absolute;top:10px;right:12px;width:20px;height:20px;background:var(--blue);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .payment-icon{width:64px;height:64px;background:var(--gray-light);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:28px;transition:background 0.2s;}
+  .payment-option.selected .payment-icon{background:white;}
+  .payment-name{font-size:13px;font-weight:700;color:var(--text);}
+  .payment-option.selected .payment-name{color:var(--blue);}
+  .payment-desc{font-size:11px;color:var(--gray-text);line-height:1.5;}
+
+  /* ── SECURITY BADGE ── */
+  .security-badge{display:flex;align-items:center;gap:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--green);font-weight:600;margin-top:14px;}
+
+  /* ── CGV ── */
+  .cgv-wrap{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--gray-border);border-radius:var(--radius);cursor:pointer;transition:all 0.15s;background:var(--white);user-select:none;}
+  .cgv-wrap:hover,.cgv-wrap.checked{border-color:var(--blue);background:var(--blue-light);}
+  .cgv-box{width:18px;height:18px;flex-shrink:0;border:2px solid var(--gray-border);border-radius:4px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+  .cgv-wrap.checked .cgv-box{border-color:var(--blue);background:var(--blue);}
+  .cgv-wrap.checked .cgv-box::after{content:"✓";color:white;font-size:11px;font-weight:700;}
+  .cgv-label{font-size:13px;color:var(--text);}
+  .cgv-label a{color:var(--blue);font-weight:600;}
+
+  /* ── BUTTONS ── */
+  .btn{height:44px;padding:0 28px;border-radius:22px;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:800;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;}
+  .btn-primary{background:var(--blue);color:white;}
+  .btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,75,130,0.28);}
+  .btn-primary:disabled{background:#94a3b8;cursor:not-allowed;transform:none;box-shadow:none;}
+  .btn-ghost{background:transparent;color:var(--gray-text);border:1.5px solid var(--gray-border);}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+  .btn-lg{height:50px;padding:0 36px;font-size:13px;}
+  .action-buttons{display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:12px;}
+
+  /* ── TRUST STRIP ── */
+  .trust-strip{background:var(--white);padding:40px 48px;border-top:1px solid var(--gray-border);}
+  .trust-strip-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1200px;margin:0 auto;}
+  .trust-item{display:flex;align-items:center;gap:18px;padding:24px 28px;background:var(--gray-bg);border:1px solid var(--gray-border);border-top:3px solid var(--blue);border-radius:var(--radius-lg);}
+  .trust-icon{font-size:28px;flex-shrink:0;}
+  .trust-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:3px;}
+  .trust-desc{font-size:12px;color:var(--gray-text);line-height:1.5;}
+
+  /* ── FOOTER ── */
+  .site-footer{background:#0f2444;padding:36px 48px 0;margin-top:0;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-brand p{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:14px;}
+  .footer-contact-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;text-decoration:none;color:rgba(255,255,255,0.55);font-size:11.5px;transition:color 0.15s;}
+  .footer-contact-item:hover{color:white;}
+  .footer-col-title{font-size:9px;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .footer-col a{display:block;font-size:12px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:7px;transition:color 0.15s;}
+  .footer-col a:hover{color:white;}
+  .footer-social-grid{display:flex;gap:8px;}
+  .social-link{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:opacity 0.15s;}
+  .social-link:hover{opacity:0.8;}
+  .social-link svg{width:16px;height:16px;}
+  .social-link.fb{background:#1877f2;} .social-link.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+  .social-link.li{background:#0077b5;} .social-link.yt{background:#ff0000;}
+  .footer-bottom{padding:16px 0 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .footer-copy{font-size:10.5px;color:rgba(255,255,255,0.22);}
+  .footer-legal{display:flex;gap:14px;}
+  .footer-legal a{font-size:10.5px;color:rgba(255,255,255,0.28);text-decoration:none;transition:color 0.15s;}
+  .footer-legal a:hover{color:rgba(255,255,255,0.6);}
+
+  @keyframes slideDown{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+
+  /* ── RESPONSIVE 1024px ── */
+  @media(max-width:1024px){
+    .header-top{padding:12px 24px;}
+    .header-nav{padding:0 24px;}
+    .stepper-bar{padding:14px 24px;}
+    .trust-strip{padding:32px 24px;}
+    .site-footer{padding:32px 24px 0;}
+    .footer-grid{grid-template-columns:1.4fr 1fr 1fr;gap:24px;}
+    .footer-grid .footer-col:last-child{grid-column:1/-1;}
+    .footer-social-grid{flex-direction:row;}
+  }
+
+  /* ── RESPONSIVE 768px ── */
+  @media(max-width:768px){
+    .header-top{flex-wrap:wrap;padding:12px 16px;gap:10px;}
+    .header-search{order:3;flex:0 0 100%;max-width:100%;margin:0;}
+    .header-actions{margin-left:auto;}
+    .user-info{display:none;}
+    .header-nav{padding:0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .header-nav::-webkit-scrollbar{display:none;}
+    .nav-item{padding:12px 14px;font-size:10px;}
+    .stepper-bar{padding:12px 16px;}
+    .step-label{display:none;}
+    .page-wrap{padding:20px 16px 56px;}
+    .payment-grid{grid-template-columns:1fr;}
+    .action-buttons{flex-direction:column-reverse;}
+    .btn{width:100%;justify-content:center;}
+    .trust-strip{padding:24px 16px;}
+    .trust-strip-inner{grid-template-columns:1fr;gap:12px;}
+    .trust-item{padding:18px 20px;}
+    .site-footer{padding:28px 16px 0;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:20px;}
+    .footer-brand{grid-column:1/-1;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+    .footer-legal{flex-wrap:wrap;gap:10px;}
+  }
+
+  /* ── RESPONSIVE 480px ── */
+  @media(max-width:480px){
+    .ann-slide{padding:0 38px 0 10px;font-size:11px;}
+    .stepper-bar{padding:10px 12px;}
+    .page-wrap{padding:16px 12px 40px;}
+    .page-title{font-size:22px;}
+    .trust-strip{padding:18px 12px;}
+    .trust-item{padding:14px 16px;gap:12px;}
+    .site-footer{padding:24px 12px 0;}
+    .footer-grid{grid-template-columns:1fr;}
+    .footer-legal{flex-direction:column;gap:8px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── ANNOUNCEMENT BAR ── -->
+<div class="ann-bar" id="annBar">
+  <div class="ann-slider">
+    <div class="ann-track" id="annTrack">
+      <div class="ann-slide">🚚 <strong>Livraison offerte</strong> dès 150 € HT d'achat &nbsp;·&nbsp; Expédition sous 48h</div>
+      <div class="ann-slide">🏆 <strong>Maison Delorme</strong> — Votre partenaire professionnel depuis <strong>1884</strong></div>
+      <div class="ann-slide">📞 Contactez notre équipe&nbsp;: <strong>+33 1 41 95 51 00</strong> &nbsp;·&nbsp; Lun–Ven 8h–18h</div>
+      <div class="ann-slide">🔒 <strong>Paiement 100% sécurisé</strong> — CB, virement ou paiement différé</div>
+    </div>
+  </div>
+  <button class="ann-close" id="annClose" aria-label="Fermer">✕</button>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="site-header" role="banner">
+  <div class="header-top">
+    <a href="homepage_8.html" class="header-logo" aria-label="Maison Delorme — Accueil">
+      <div class="logo-mark">D</div>
+      <div class="logo-text">
+        <span class="logo-name">Maison Delorme</span>
+        <span class="logo-sub">Depuis 1884</span>
+      </div>
+    </a>
+    <div class="header-search" role="search">
+      <input type="search" placeholder="Rechercher un produit, une marque…" autocomplete="off" aria-label="Rechercher">
+      <button class="search-btn" aria-label="Lancer la recherche">🔍</button>
+    </div>
+    <div class="header-actions">
+      <a href="#" class="header-cart" aria-label="Panier (1 article)">
+        🛒<span class="cart-badge">1</span>
+      </a>
+      <a href="#" class="header-user">
+        <span style="font-size:22px;">👤</span>
+        <div class="user-info">
+          <span class="user-greeting">Bonjour,</span>
+          <span class="user-label">Mon compte</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="header-nav" role="navigation" aria-label="Navigation principale">
+    <a href="#" class="nav-item">Coiffure</a>
+    <a href="#" class="nav-item">Barbe</a>
+    <a href="#" class="nav-item">Beauté</a>
+    <a href="#" class="nav-item">Promotions</a>
+    <a href="#" class="nav-item">Nouveautés</a>
+    <a href="ou-nous-trouver_3.html" class="nav-item">Où nous trouver ?</a>
+  </nav>
+</header>
+
+<!-- ── STEPPER ── -->
+<div class="stepper-bar" role="navigation" aria-label="Étapes du checkout">
+  <div class="stepper">
+    <div class="step done">
+      <div class="step-circle">✓</div>
+      <span class="step-label">Panier</span>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step done">
+      <div class="step-circle">✓</div>
+      <span class="step-label">Livraison</span>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step done">
+      <div class="step-circle">✓</div>
+      <span class="step-label">Récapitulatif</span>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step active">
+      <div class="step-circle">4</div>
+      <span class="step-label">Paiement</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE ── -->
+<main class="page-wrap">
+
+  <h1 class="page-title">Choix du mode de paiement</h1>
+  <p class="page-subtitle">Sélectionnez votre mode de paiement préféré pour finaliser votre commande.</p>
+
+  <!-- RÉSUMÉ COMMANDE -->
+  <div class="card">
+    <div class="card-header">
+      <span style="font-size:16px;">🧾</span>
+      <span class="card-header-title">Résumé de la commande</span>
+    </div>
+    <div class="card-body" style="padding:16px 20px 20px;">
+      <div class="order-row"><span class="lbl">Sous-total HT</span><span class="val">5,35 €</span></div>
+      <div class="order-row"><span class="lbl">Frais de port HT</span><span class="val">12,00 €</span></div>
+      <div class="order-row"><span class="lbl">TVA (20 %)</span><span class="val">3,47 €</span></div>
+      <div class="order-total">
+        <span class="lbl">Total à régler</span>
+        <span class="val">20,82 €</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODES DE PAIEMENT -->
+  <div class="card">
+    <div class="card-header">
+      <span style="font-size:16px;">💳</span>
+      <span class="card-header-title">Mode de paiement</span>
+    </div>
+    <div class="card-body">
+      <div class="payment-grid" role="radiogroup" aria-label="Choisir un mode de paiement">
+
+        <div class="payment-option selected" role="radio" aria-checked="true" tabindex="0">
+          <div class="payment-icon">💳</div>
+          <div>
+            <div class="payment-name">Carte bancaire</div>
+            <div class="payment-desc">Visa, Mastercard, CB — Paiement sécurisé 3D Secure</div>
+          </div>
+        </div>
+
+        <div class="payment-option" role="radio" aria-checked="false" tabindex="0">
+          <div class="payment-icon">🏦</div>
+          <div>
+            <div class="payment-name">Virement bancaire</div>
+            <div class="payment-desc">Délai de traitement 2 à 3 jours ouvrés</div>
+          </div>
+        </div>
+
+        <div class="payment-option" role="radio" aria-checked="false" tabindex="0">
+          <div class="payment-icon">⏱️</div>
+          <div>
+            <div class="payment-name">Paiement différé</div>
+            <div class="payment-desc">Réglez à réception de facture selon conditions</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="security-badge" role="status">
+        🔒 <span>Paiement 100% sécurisé — Vos données bancaires sont chiffrées et protégées</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CGV -->
+  <div class="card">
+    <div class="card-body" style="padding:16px 20px;">
+      <div class="cgv-wrap" id="cgv-toggle" role="checkbox" aria-checked="false" tabindex="0">
+        <div class="cgv-box" aria-hidden="true"></div>
+        <span class="cgv-label">
+          J'ai lu et j'accepte les <a href="#" onclick="return false;">Conditions Générales de Vente</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="action-buttons">
+    <a href="checkout-livraison_2.html" class="btn btn-ghost">← Retour</a>
+    <button class="btn btn-primary btn-lg" id="confirm-btn" disabled aria-disabled="true">
+      ✓ Confirmer ma commande
+    </button>
+  </div>
+
+</main>
+
+<!-- ── TRUST STRIP ── -->
+<section class="trust-strip" aria-label="Nos engagements">
+  <div class="trust-strip-inner">
+    <div class="trust-item">
+      <span class="trust-icon">🚚</span>
+      <div>
+        <div class="trust-title">Livraison express offerte</div>
+        <div class="trust-desc">France métropolitaine dès 90 € HT</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">🔒</span>
+      <div>
+        <div class="trust-title">Paiement sécurisé</div>
+        <div class="trust-desc">Transactions chiffrées SSL 256 bits</div>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">📞</span>
+      <div>
+        <div class="trust-title">Besoin d'aide ?</div>
+        <div class="trust-desc"><a href="tel:+33141955100" style="color:var(--blue);font-weight:700;text-decoration:none;">+33 1 41 95 51 00</a> — Lun–Ven 8h–18h</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+
+    <div class="footer-col footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div class="logo-mark" style="width:38px;height:38px;font-size:18px;">D</div>
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:16px;color:white;">Maison Delorme</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);">Depuis 1884</div>
+        </div>
+      </div>
+      <p>Votre partenaire professionnel en coiffure, barbe &amp; beauté depuis plus de 140 ans.</p>
+      <a href="tel:+33141955100" class="footer-contact-item">📞 +33 1 41 95 51 00</a>
+      <a href="mailto:contact@maisondelorme.fr" class="footer-contact-item">✉️ contact@maisondelorme.fr</a>
+      <a href="ou-nous-trouver_3.html" class="footer-contact-item">📍 4 dépôts en France</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Univers</div>
+      <a href="#">Coiffure professionnelle</a>
+      <a href="#">Barbe &amp; rasage</a>
+      <a href="#">Beauté &amp; soins</a>
+      <a href="#">Promotions</a>
+      <a href="#">Nouveautés</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Informations</div>
+      <a href="contact.html">Nous contacter</a>
+      <a href="ou-nous-trouver_3.html">Nos dépôts</a>
+      <a href="#">Livraison &amp; retours</a>
+      <a href="#">CGV</a>
+      <a href="#">Mentions légales</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title">Suivez-nous</div>
+      <div class="footer-social-grid">
+        <a href="#" class="social-link fb" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-link ig" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-link li" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="social-link yt" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff0000"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Maison Delorme SAS — Siret 692 001 258 000 15 — Tous droits réservés</span>
+    <nav class="footer-legal" aria-label="Liens légaux">
+      <a href="#">CGV</a>
+      <a href="#">Mentions légales</a>
+      <a href="#">Politique de confidentialité</a>
+      <a href="#">Cookies</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Announcement bar auto-scroll
+  (function(){
+    const track = document.getElementById('annTrack');
+    if(!track) return;
+    const slides = track.children;
+    let idx = 0;
+    setInterval(function(){
+      idx = (idx + 1) % slides.length;
+      track.style.transform = 'translateY(-' + (idx * 38) + 'px)';
+    }, 3500);
+    document.getElementById('annClose').addEventListener('click', function(){
+      document.getElementById('annBar').style.display = 'none';
+    });
+  })();
+
+  // Payment option selection
+  document.querySelectorAll('.payment-option').forEach(function(opt) {
+    function select() {
+      document.querySelectorAll('.payment-option').forEach(function(o) {
+        o.classList.remove('selected');
+        o.setAttribute('aria-checked', 'false');
+      });
+      opt.classList.add('selected');
+      opt.setAttribute('aria-checked', 'true');
+    }
+    opt.addEventListener('click', select);
+    opt.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+    });
+  });
+
+  // CGV toggle
+  (function(){
+    const toggle = document.getElementById('cgv-toggle');
+    const btn = document.getElementById('confirm-btn');
+    function toggleCGV() {
+      const checked = toggle.classList.toggle('checked');
+      toggle.setAttribute('aria-checked', checked);
+      btn.disabled = !checked;
+      btn.setAttribute('aria-disabled', !checked);
+    }
+    toggle.addEventListener('click', toggleCGV);
+    toggle.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCGV(); }
+    });
+  })();
+</script>
+</body>
+</html>
