@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Maison Delorme</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#1B4B82; --blue-dark:#163d6e; --blue-light:#e8f0fb; --blue-mid:#2d6bb5;
+    --pink:#e91e8c; --gray-bg:#f5f6f8; --gray-border:#e2e6ec; --gray-text:#6b7280;
+    --text:#1a1f2e; --white:#fff; --radius:8px; --radius-lg:14px;
+    --shadow:0 4px 24px rgba(27,75,130,0.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--text);font-size:14px;line-height:1.6;overflow-x:hidden;}
+
+  /* ── ANNOUNCEMENT BAR ── */
+  .ann-bar{background:var(--text);height:36px;display:flex;align-items:center;overflow:hidden;position:relative;}
+  .ann-slider{flex:1;overflow:hidden;height:36px;}
+  .ann-track{display:flex;flex-direction:column;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);}
+  .ann-slide{height:36px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 48px;white-space:nowrap;flex-shrink:0;font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);}
+  .ann-slide strong{color:white;}
+  .ann-slide a{color:rgba(255,255,255,0.7);text-decoration:underline;text-underline-offset:2px;}
+  .ann-close{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:rgba(255,255,255,0.3);z-index:2;padding:4px;}
+  .ann-close:hover{color:rgba(255,255,255,0.7);}
+
+  /* ── HEADER ── */
+  .site-header{background:var(--white);border-bottom:1px solid var(--gray-border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,75,130,0.07);}
+  .header-top{display:flex;align-items:center;padding:12px 48px;gap:28px;}
+  .header-logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;}
+  .logo-mark{width:40px;height:40px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-family:"DM Serif Display",serif;font-size:20px;font-style:italic;flex-shrink:0;}
+  .logo-text{display:flex;flex-direction:column;line-height:1.1;}
+  .logo-name{font-family:"DM Serif Display",serif;font-size:17px;color:var(--text);}
+  .logo-sub{font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gray-text);}
+  .header-search{flex:1;max-width:500px;margin:0 auto;position:relative;}
+  .header-search input{width:100%;height:42px;border:2px solid var(--gray-border);border-radius:21px;padding:0 48px 0 18px;font-size:13px;font-family:"DM Sans",sans-serif;outline:none;background:var(--gray-bg);transition:all 0.2s;}
+  .header-search input:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(27,75,130,0.08);}
+  .header-search input::placeholder{color:#b0bac8;}
+  .search-btn{position:absolute;right:5px;top:5px;width:32px;height:32px;background:var(--blue);border:none;border-radius:50%;cursor:pointer;color:white;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  .header-actions{display:flex;align-items:center;gap:22px;flex-shrink:0;}
+  .header-cart{position:relative;text-decoration:none;color:var(--text);font-size:22px;}
+  .cart-badge{position:absolute;top:-6px;right:-8px;width:18px;height:18px;background:var(--pink);color:white;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .header-user{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);}
+  .user-info{display:flex;flex-direction:column;}
+  .user-greeting{font-size:11px;color:var(--gray-text);}
+  .user-label{font-size:11.5px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;}
+
+  /* ── NAV ── */
+  .header-nav{border-top:1px solid var(--gray-border);padding:0 48px;display:flex;align-items:center;}
+  .nav-item{padding:13px 18px;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text);text-decoration:none;border-bottom:3px solid transparent;transition:all 0.15s;white-space:nowrap;position:relative;}
+  .nav-item:hover{color:var(--blue);border-bottom-color:var(--blue);}
+  .nav-item.active{color:var(--blue);border-bottom-color:var(--blue);}
+  .nav-item.promo{color:var(--pink);}
+  .dropdown{position:absolute;top:100%;left:0;background:white;border:1px solid var(--gray-border);border-top:3px solid var(--blue);border-radius:0 0 var(--radius-lg) var(--radius-lg);min-width:230px;box-shadow:0 16px 40px rgba(27,75,130,0.14);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.18s;z-index:200;padding:8px 0;}
+  .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dropdown a{display:block;padding:10px 22px;font-size:11.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);text-decoration:none;transition:all 0.12s;}
+  .dropdown a:hover{background:var(--blue-light);color:var(--blue);padding-left:28px;}
+
+  /* ── PAGE HEADER ── */
+  .page-header{max-width:1200px;margin:0 auto;padding:40px 48px 0;}
+  .page-breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gray-text);margin-bottom:20px;}
+  .page-breadcrumb a{color:var(--gray-text);text-decoration:none;transition:color 0.15s;}
+  .page-breadcrumb a:hover{color:var(--blue);}
+  .page-breadcrumb span{color:#c4cdd8;}
+
+  /* ── MAIN LAYOUT ── */
+  .page-body{max-width:1200px;margin:0 auto;padding:28px 48px 80px;display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:start;}
+
+  /* ── FORM ── */
+  .page-title{font-family:"DM Serif Display",serif;font-size:40px;color:var(--text);letter-spacing:-1px;line-height:1.1;margin-bottom:6px;}
+  .page-title-sub{font-size:14px;color:var(--gray-text);margin-bottom:36px;}
+  .form-section h2{font-family:"DM Serif Display",serif;font-size:22px;color:var(--text);letter-spacing:-0.4px;margin-bottom:6px;}
+  .form-intro{font-size:13.5px;color:var(--gray-text);line-height:1.65;margin-bottom:32px;}
+  .form-intro a{color:var(--blue);text-decoration:none;}
+  .form-intro a:hover{text-decoration:underline;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-field{margin-bottom:20px;}
+  .form-label{display:block;font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:7px;letter-spacing:0.02em;}
+  .form-label span{color:var(--pink);margin-left:2px;}
+  .form-input{width:100%;height:48px;border:1.5px solid var(--gray-border);border-radius:var(--radius);padding:0 16px;font-size:13.5px;font-family:"DM Sans",sans-serif;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s;background:white;}
+  .form-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,75,130,0.08);}
+  .form-input.error{border-color:#ef4444;}
+  .form-input::placeholder{color:#c4cdd8;}
+  .form-textarea{width:100%;height:180px;border:1.5px solid var(--gray-border);border-radius:var(--radius);padding:14px 16px;font-size:13.5px;font-family:"DM Sans",sans-serif;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s;resize:vertical;background:white;line-height:1.6;}
+  .form-textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,75,130,0.08);}
+  .form-textarea.error{border-color:#ef4444;}
+  .btn-submit{height:50px;padding:0 40px;background:var(--blue);color:white;border:none;border-radius:25px;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:800;letter-spacing:0.09em;text-transform:uppercase;cursor:pointer;transition:all 0.18s;display:inline-flex;align-items:center;gap:10px;}
+  .btn-submit:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,75,130,0.28);}
+  .success-msg{display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:var(--radius);padding:16px 20px;margin-top:20px;font-size:13px;color:#166534;font-weight:600;}
+
+  /* ── SIDEBAR ── */
+  .contact-sidebar{display:flex;flex-direction:column;gap:16px;}
+  .info-card{background:var(--gray-bg);border:1px solid var(--gray-border);border-radius:var(--radius-lg);padding:24px;}
+  .info-card-title{font-size:10px;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+  .info-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+  .info-item:last-child{margin-bottom:0;}
+  .info-icon{width:32px;height:32px;background:var(--blue-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px;}
+  .info-text{font-size:13px;color:var(--text);line-height:1.55;}
+  .info-text strong{display:block;font-weight:700;margin-bottom:2px;}
+  .info-text a{color:var(--blue);text-decoration:none;font-weight:600;}
+  .info-text a:hover{text-decoration:underline;}
+  .hours-grid{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;font-size:12.5px;margin-top:8px;}
+  .hours-grid dt{color:var(--gray-text);}
+  .hours-grid dd{font-weight:600;color:var(--text);}
+  .map-placeholder{background:var(--blue-light);border-radius:var(--radius);height:160px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-top:4px;border:1px solid rgba(27,75,130,0.12);}
+
+  /* ── TRUST STRIP ── */
+  .trust-strip{background:var(--white);border-top:1px solid var(--gray-border);border-bottom:1px solid var(--gray-border);padding:28px 48px;}
+  .trust-strip-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .trust-item{display:flex;align-items:center;gap:16px;padding:20px 22px;background:var(--gray-bg);border:1px solid var(--gray-border);border-top:3px solid var(--blue);border-radius:var(--radius-lg);}
+  .trust-icon{font-size:26px;flex-shrink:0;}
+  .trust-text h3{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:var(--text);margin-bottom:3px;}
+  .trust-text p{font-size:12px;color:var(--gray-text);line-height:1.5;}
+
+  /* ── FOOTER ── */
+  .site-footer{background:#0f2444;padding:32px 48px 0;}
+  .footer-inner{max-width:1200px;margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-brand .logo-mark{width:36px;height:36px;font-size:18px;background:rgba(255,255,255,0.1);margin-bottom:10px;}
+  .footer-brand-name{font-family:"DM Serif Display",serif;font-size:17px;color:white;margin-bottom:6px;}
+  .footer-brand-desc{font-size:11.5px;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:14px;}
+  .footer-contact-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;text-decoration:none;color:rgba(255,255,255,0.55);font-size:11.5px;transition:color 0.15s;}
+  .footer-contact-item:hover{color:white;}
+  .footer-col-title{font-size:9px;font-weight:900;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .footer-col a{display:block;font-size:12px;font-weight:500;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:8px;transition:color 0.15s;}
+  .footer-col a:hover{color:white;}
+  .footer-social-grid{display:flex;gap:8px;flex-wrap:wrap;}
+  .social-link{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:opacity 0.18s;}
+  .social-link svg{width:16px;height:16px;}
+  .social-link:hover{opacity:0.8;}
+  .social-link.fb{background:#1877f2;}
+  .social-link.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+  .social-link.li{background:#0077b5;}
+  .social-link.yt{background:#ff0000;}
+  .footer-bottom{padding:16px 0 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .footer-copy{font-size:10.5px;color:rgba(255,255,255,0.22);}
+  .footer-legal{display:flex;gap:16px;}
+  .footer-legal a{font-size:10.5px;color:rgba(255,255,255,0.28);text-decoration:none;transition:color 0.15s;}
+  .footer-legal a:hover{color:rgba(255,255,255,0.6);}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:1024px){
+    .header-top{padding:12px 24px;}
+    .header-nav{padding:0 24px;}
+    .page-header{padding:32px 24px 0;}
+    .page-body{padding:40px 24px 64px;grid-template-columns:1fr 300px;gap:36px;}
+    .trust-strip{padding:24px;}
+    .site-footer{padding:28px 24px 0;}
+    .footer-grid{grid-template-columns:1.4fr 1fr 1fr;gap:24px;}
+    .footer-grid .footer-col:last-child{grid-column:1/-1;}
+    .footer-social-grid{flex-direction:row;}
+  }
+  @media(max-width:768px){
+    .header-top{flex-wrap:wrap;padding:10px 16px;gap:10px;}
+    .header-search{order:3;flex:0 0 100%;max-width:100%;margin:0;}
+    .header-actions{margin-left:auto;}
+    .user-info{display:none;}
+    .header-nav{padding:0 16px;overflow-x:auto;scrollbar-width:none;}
+    .header-nav::-webkit-scrollbar{display:none;}
+    .page-header{padding:28px 16px 0;}
+    .page-title{font-size:30px;}
+    .page-body{padding:20px 16px 56px;grid-template-columns:1fr;gap:32px;}
+    .contact-sidebar{order:1;}
+    .form-section{order:2;}
+    .form-row{grid-template-columns:1fr;}
+    .trust-strip{padding:20px 16px;}
+    .trust-strip-inner{grid-template-columns:1fr;gap:10px;}
+    .site-footer{padding:24px 16px 0;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:20px;}
+    .footer-brand{grid-column:1/-1;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+  }
+  @media(max-width:480px){
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── ANNOUNCEMENT BAR ── -->
+<div class="ann-bar" id="annBar">
+  <div class="ann-slider">
+    <div class="ann-track" id="annTrack">
+      <div class="ann-slide">🚚 <strong>Livraison offerte</strong> dès 150 € HT — Expédition sous 48h</div>
+      <div class="ann-slide">🏆 <strong>Maison Delorme</strong> — Votre partenaire professionnel depuis <strong>1884</strong></div>
+      <div class="ann-slide">📞 <strong>+33 1 41 95 51 00</strong> — Lun–Ven 8h30–18h30</div>
+      <div class="ann-slide">🔒 <strong>Paiement sécurisé</strong> — CB, virement ou paiement différé</div>
+    </div>
+  </div>
+  <button class="ann-close" onclick="document.getElementById('annBar').style.display='none'" aria-label="Fermer">✕</button>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="site-header" role="banner">
+  <div class="header-top">
+    <a href="homepage_8.html" class="header-logo" aria-label="Maison Delorme — Accueil">
+      <div class="logo-mark">D</div>
+      <div class="logo-text">
+        <span class="logo-name">Maison Delorme</span>
+        <span class="logo-sub">Depuis 1884</span>
+      </div>
+    </a>
+    <div class="header-search" role="search">
+      <input type="search" placeholder="Rechercher un produit, une marque…" autocomplete="off" aria-label="Rechercher">
+      <button class="search-btn" aria-label="Lancer la recherche">🔍</button>
+    </div>
+    <div class="header-actions">
+      <a href="#" class="header-cart" aria-label="Panier">
+        🛒<span class="cart-badge">1</span>
+      </a>
+      <a href="#" class="header-user" aria-label="Mon compte">
+        <span style="font-size:22px;">👤</span>
+        <div class="user-info">
+          <span class="user-greeting">Bonjour,</span>
+          <span class="user-label">Mon compte</span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="header-nav" aria-label="Navigation principale">
+    <a href="#" class="nav-item">Coiffure
+      <div class="dropdown">
+        <a href="#">Gros matériel & mobilier</a>
+        <a href="#">Linge & petit matériel</a>
+        <a href="#">Produits techniques</a>
+      </div>
+    </a>
+    <a href="#" class="nav-item">Barbe
+      <div class="dropdown">
+        <a href="#">Gros matériel</a>
+        <a href="#">Linge & petit matériel</a>
+        <a href="#">Produits techniques barber</a>
+      </div>
+    </a>
+    <a href="#" class="nav-item">Beauté
+      <div class="dropdown">
+        <a href="#">Gros matériel</a>
+        <a href="#">Linge & petit matériel</a>
+        <a href="#">Produits esthétiques</a>
+      </div>
+    </a>
+    <a href="#" class="nav-item promo">Promotions</a>
+    <a href="#" class="nav-item">Nouveautés</a>
+    <a href="#" class="nav-item active">Contact</a>
+  </nav>
+</header>
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <nav class="page-breadcrumb" aria-label="Fil d'Ariane">
+    <a href="homepage_8.html">Accueil</a>
+    <span>›</span>
+    <span>Contact</span>
+  </nav>
+  <h1 class="page-title">Contact</h1>
+  <p class="page-title-sub">Une question, un devis, une commande ? Notre équipe vous répond sous 24h.</p>
+</div>
+
+<!-- ── MAIN ── -->
+<main>
+  <div class="page-body">
+
+    <!-- Formulaire -->
+    <section class="form-section" aria-labelledby="form-title">
+      <h2 id="form-title">Envoyez-nous un message</h2>
+      <p class="form-intro">
+        Remplissez le formulaire ci-dessous. En cas d'urgence, consultez la page
+        <a href="#">Où nous trouver</a> pour nous joindre directement.
+      </p>
+
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="prenom">Prénom<span>*</span></label>
+            <input class="form-input" type="text" id="prenom" name="prenom" autocomplete="given-name">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="nom">Nom<span>*</span></label>
+            <input class="form-input" type="text" id="nom" name="nom" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="email">E-mail<span>*</span></label>
+            <input class="form-input" type="email" id="email" name="email" autocomplete="email">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="client">N° client <span style="font-weight:400;color:var(--gray-text)">(facultatif)</span></label>
+            <input class="form-input" type="text" id="client" name="client" placeholder="Ex : CLI-00421">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="objet">Objet<span>*</span></label>
+          <input class="form-input" type="text" id="objet" name="objet">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="message">Message<span>*</span></label>
+          <textarea class="form-textarea" id="message" name="message" rows="6"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Envoyer le message →</button>
+        <div class="success-msg" id="successMsg" role="alert">
+          ✅ Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.
+        </div>
+      </form>
+    </section>
+
+    <!-- Sidebar info -->
+    <aside class="contact-sidebar" aria-label="Informations de contact">
+
+      <div class="info-card">
+        <p class="info-card-title">Nos coordonnées</p>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div class="info-text">
+            <strong>Téléphone</strong>
+            <a href="tel:+33141955100">+33 1 41 95 51 00</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div class="info-text">
+            <strong>E-mail</strong>
+            <a href="mailto:contact@maison-delorme.fr">contact@maison-delorme.fr</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-text">
+            <strong>Adresse</strong>
+            ZA de la Croix Blanche<br>
+            77183 Croissy-Beaubourg
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <p class="info-card-title">Horaires d'ouverture</p>
+        <dl class="hours-grid">
+          <dt>Lundi – Vendredi</dt><dd>8h30 – 18h30</dd>
+          <dt>Samedi</dt><dd>9h00 – 12h30</dd>
+          <dt>Dimanche</dt><dd>Fermé</dd>
+        </dl>
+        <div class="map-placeholder" aria-hidden="true">🗺️</div>
+      </div>
+
+    </aside>
+
+  </div>
+</main>
+
+<!-- ── TRUST STRIP ── -->
+<aside class="trust-strip" aria-label="Nos engagements">
+  <div class="trust-strip-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🚚</div>
+      <div class="trust-text">
+        <h3>Livraison rapide</h3>
+        <p>Expédition sous 48h. Offerte dès 150 € HT.</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <div class="trust-text">
+        <h3>Paiement sécurisé</h3>
+        <p>CB, virement ou paiement différé pro.</p>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🎯</div>
+      <div class="trust-text">
+        <h3>Conseil expert</h3>
+        <p>Une équipe dédiée, Lun–Ven 8h30–18h30.</p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="logo-mark">D</div>
+        <p class="footer-brand-name">Maison Delorme</p>
+        <p class="footer-brand-desc">Distributeur professionnel de matériel et produits pour la coiffure, le barbier et la beauté depuis 1884.</p>
+        <a href="tel:+33141955100" class="footer-contact-item">📞 +33 1 41 95 51 00</a>
+        <a href="mailto:contact@maison-delorme.fr" class="footer-contact-item">✉️ contact@maison-delorme.fr</a>
+        <a href="#" class="footer-contact-item">📍 Croissy-Beaubourg, 77183</a>
+      </div>
+
+      <nav class="footer-col" aria-label="Nos univers">
+        <p class="footer-col-title">Nos univers</p>
+        <a href="#">✂️ Coiffure</a>
+        <a href="#">🪒 Barbe & Barbier</a>
+        <a href="#">💄 Beauté</a>
+        <a href="#" style="color:var(--pink)">🏷️ Promotions</a>
+        <a href="#">🆕 Nouveautés</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Informations">
+        <p class="footer-col-title">Informations</p>
+        <a href="#">Notre histoire</a>
+        <a href="#">Où nous trouver ?</a>
+        <a href="#">Formations</a>
+        <a href="#">Contact</a>
+        <a href="#">FAQ</a>
+      </nav>
+
+      <div class="footer-col">
+        <p class="footer-col-title">Nous suivre</p>
+        <div class="footer-social-grid">
+          <a href="#" class="social-link fb" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="social-link ig" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-link li" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+          </a>
+          <a href="#" class="social-link yt" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2004–2026 Delorme SAS — SIRET 692 001 258 000 15 — Tous droits réservés</p>
+      <div class="footer-legal">
+        <a href="#">CGV</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Announcement slider
+  (function(){
+    const track = document.getElementById('annTrack');
+    if(!track) return;
+    const slides = track.querySelectorAll('.ann-slide');
+    let cur = 0;
+    setInterval(() => {
+      cur = (cur + 1) % slides.length;
+      track.style.transform = `translateY(-${cur * 36}px)`;
+    }, 4000);
+  })();
+
+  // Form submission
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const required = ['prenom','nom','email','objet','message'];
+    let valid = true;
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      if(!el.value.trim()){
+        el.classList.add('error');
+        valid = false;
+      } else {
+        el.classList.remove('error');
+      }
+    });
+    if(valid){
+      document.querySelector('.btn-submit').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>
