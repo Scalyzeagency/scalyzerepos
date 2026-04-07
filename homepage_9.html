@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison Delorme — Coiffure | Barbe | Beauté</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+       VARIABLES CSS
+    ============================================= */
+:root {
+      --color-primary:     #FFFFFF;
+      --color-accent:      #F33F9D;
+      --color-accent-dark: #c42d82;
+      --color-blue:        #005CA4;
+      --color-blue-hover:  #004a87;
+      --color-blue-light:  #7BBFEA;
+      --color-navy:        #0F2D5A;
+      --color-bg:          #F5F6F8;
+      --color-text:        #1E2A38;
+      --color-text-light:  #5A6472;
+      --color-border:      #DDE1E7;
+      --color-placeholder: #C8D0DC;
+      --font-main:         'IBM Plex Sans', sans-serif;
+      --space-xs:  0.4rem;
+      --space-sm:  0.875rem;
+      --space-md:  1.25rem;
+      --space-lg:  2rem;
+      --space-xl:  3rem;
+      --radius:    6px;
+      --shadow:    0 1px 8px rgba(0,0,0,0.09);
+    }
+/* =============================================
+       RESET & BASE
+    ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html  { scroll-behavior: smooth; }
+body  { font-family: var(--font-main); font-size: 15px; background: var(--color-bg); color: var(--color-text); line-height: 1.65; }
+a     { text-decoration: none; color: inherit; }
+ul    { list-style: none; }
+img   { display: block; max-width: 100%; }
+/* =============================================
+       TOPBAR — bleu #005CA4
+    ============================================= */
+.topbar {
+background: var(--color-blue);
+color: rgba(255,255,255,.85);
+font-size: .75rem;
+    }
+.topbar__inner {
+max-width: 1280px;
+margin: 0 auto;
+padding: .42rem var(--space-sm);
+display: flex;
+justify-content: space-between;
+align-items: center;
+    }
+.topbar__info { font-size: .72rem; }
+.topbar__links { display: flex; gap: var(--space-md); align-items: center; }
+.topbar__links a { color: rgba(255,255,255,.85); font-size: .75rem; transition: color .15s; }
+.topbar__links a:hover { color: #fff; }
+.topbar__links a + a { border-left: 1px solid rgba(255,255,255,.3); padding-left: var(--space-md); }
+/* =============================================
+       HEADER / NAVBAR — fond blanc
+    ============================================= */
+header {
+background: var(--color-primary);
+border-bottom: 2px solid var(--color-border);
+box-shadow: var(--shadow);
+position: sticky;
+top: 0;
+z-index: 100;
+    }
+.navbar {
+max-width: 1280px;
+margin: 0 auto;
+padding: 0 var(--space-sm);
+height: 72px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: var(--space-sm);
+    }
+/* Logo SVG */
+.navbar__logo {
+display: flex;
+align-items: center;
+flex-shrink: 0;
+    }
+.navbar__logo img { height: 54px; width: auto; }
+/* Navigation centrale */
+.navbar__nav {
+display: flex;
+align-items: center;
+gap: var(--space-md);
+    }
+.navbar__nav a {
+font-size: .88rem;
+font-weight: 500;
+color: var(--color-text);
+white-space: nowrap;
+transition: color .2s;
+    }
+.navbar__nav a:hover { color: var(--color-blue); }
+/* Promotions — rose, sans badge */
+.nav-promo {
+color: var(--color-accent) !important;
+font-weight: 700 !important;
+    }
+/* Zone droite */
+.navbar__actions {
+display: flex;
+align-items: center;
+gap: var(--space-sm);
+flex-shrink: 0;
+    }
+.search-form {
+display: flex;
+align-items: center;
+border: 1px solid var(--color-border);
+border-radius: var(--radius);
+overflow: hidden;
+background: var(--color-bg);
+    }
+.search-form input {
+border: none;
+outline: none;
+background: transparent;
+padding: .38rem .7rem;
+font-family: var(--font-main);
+font-size: .82rem;
+color: var(--color-text);
+width: 160px;
+    }
+.search-form input::placeholder { color: var(--color-text-light); }
+.search-form button {
+border: none;
+background: transparent;
+cursor: pointer;
+padding: .38rem .7rem;
+display: flex;
+align-items: center;
+color: var(--color-text-light);
+transition: color .2s;
+    }
+.search-form button:hover { color: var(--color-blue); }
+.btn-track {
+font-family: var(--font-main);
+font-size: .8rem;
+font-weight: 500;
+padding: .4rem .9rem;
+border: 1.5px solid var(--color-border);
+border-radius: var(--radius);
+background: transparent;
+cursor: pointer;
+color: var(--color-text);
+white-space: nowrap;
+transition: border-color .2s, color .2s;
+    }
+.btn-track:hover { border-color: var(--color-blue); color: var(--color-blue); }
+.cart-btn {
+background: none;
+border: none;
+cursor: pointer;
+position: relative;
+display: flex;
+align-items: center;
+padding: .3rem;
+    }
+.cart-btn svg {
+width: 24px; height: 24px;
+stroke: var(--color-text); fill: none; stroke-width: 1.8;
+transition: stroke .2s;
+    }
+.cart-btn:hover svg { stroke: var(--color-blue); }
+.cart-badge {
+position: absolute;
+top: 0; right: 0;
+background: var(--color-accent);
+color: #fff;
+font-size: .55rem;
+font-weight: 700;
+width: 15px; height: 15px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+    }
+/* Bouton recherche mobile */
+.search-mobile-btn {
+display: none;
+background: none;
+border: none;
+cursor: pointer;
+padding: .3rem;
+color: var(--color-text);
+    }
+.search-mobile-btn:hover { color: var(--color-blue); }
+/* Barre de recherche mobile déroulante */
+.mobile-search-bar {
+display: none;
+background: var(--color-primary);
+border-top: 1px solid var(--color-border);
+padding: .6rem var(--space-sm);
+    }
+.mobile-search-bar.open { display: block; }
+.mobile-search-bar .search-form {
+width: 100%;
+border-radius: var(--radius);
+    }
+.mobile-search-bar .search-form input { width: 100%; }
+/* Hamburger */
+.hamburger {
+display: none;
+flex-direction: column;
+gap: 5px;
+background: none;
+border: none;
+cursor: pointer;
+padding: .3rem;
+    }
+.hamburger span {
+display: block;
+width: 24px; height: 2px;
+background: var(--color-text);
+border-radius: 2px;
+transition: all .3s;
+    }
+/* Menu mobile */
+.mobile-nav {
+display: none;
+flex-direction: column;
+background: var(--color-primary);
+padding: var(--space-sm) var(--space-md);
+border-top: 1px solid var(--color-border);
+gap: var(--space-sm);
+    }
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+font-size: .95rem;
+font-weight: 500;
+color: var(--color-text);
+padding: .5rem 0;
+border-bottom: 1px solid var(--color-border);
+    }
+.mobile-nav .nav-promo { color: var(--color-accent); }
+.mobile-nav .mobile-actions {
+display: flex;
+flex-direction: column;
+gap: var(--space-xs);
+padding-top: var(--space-xs);
+    }
+.mobile-nav .search-form { width: 100%; }
+.mobile-nav .search-form input { width: 100%; }
+/* =============================================
+       HERO CAROUSEL
+    ============================================= */
+.hero-carousel {
+position: relative;
+overflow: hidden;
+background: var(--color-navy);
+    }
+/* Track des slides */
+.hero-track {
+display: flex;
+transition: transform .5s ease;
+will-change: transform;
+    }
+.hero-slide {
+flex: 0 0 100%;
+position: relative;
+min-height: 420px;
+display: flex;
+align-items: center;
+padding: var(--space-xl) var(--space-sm);
+overflow: hidden;
+    }
+/* Image de fond de chaque slide */
+.hero-slide__bg {
+position: absolute;
+inset: 0;
+width: 100%; height: 100%;
+object-fit: cover;
+opacity: .18;
+background-color: var(--color-placeholder);
+    }
+.hero-slide--1 { background: linear-gradient(135deg, #0a1628 0%, #0d2050 60%, #0f3460 100%); }
+.hero-slide--2 { background: linear-gradient(135deg, #0f2d5a 0%, #1a4a8a 60%, #0f3460 100%); }
+.hero-slide--3 { background: linear-gradient(135deg, #0d1e3a 0%, #1b3060 60%, #0a4060 100%); }
+.hero-slide__inner {
+position: relative;
+z-index: 1;
+max-width: 1280px;
+margin: 0 auto;
+width: 100%;
+    }
+.hero__tag {
+display: inline-block;
+background: var(--color-blue);
+color: #fff;
+font-size: .7rem;
+font-weight: 600;
+letter-spacing: .8px;
+text-transform: uppercase;
+padding: .25rem .8rem;
+border-radius: 3px;
+margin-bottom: var(--space-sm);
+    }
+.hero__title {
+font-size: clamp(1.6rem, 4vw, 2.6rem);
+font-weight: 700;
+color: #fff;
+line-height: 1.25;
+max-width: 640px;
+margin-bottom: var(--space-sm);
+    }
+.hero__subtitle {
+font-size: .95rem;
+color: rgba(255,255,255,.68);
+max-width: 500px;
+margin-bottom: var(--space-lg);
+    }
+.btn-cta {
+display: inline-block;
+background: var(--color-blue);
+color: #fff;
+font-family: var(--font-main);
+font-size: .9rem;
+font-weight: 600;
+padding: .75rem 2rem;
+border-radius: var(--radius);
+border: none;
+cursor: pointer;
+transition: background .2s;
+    }
+.btn-cta:hover { background: var(--color-blue-hover); }
+/* Flèches carousel */
+.hero-arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+z-index: 10;
+background: rgba(255,255,255,.15);
+border: 1.5px solid rgba(255,255,255,.3);
+color: #fff;
+width: 42px; height: 42px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: background .2s, border-color .2s;
+    }
+.hero-arrow:hover { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.6); }
+.hero-arrow svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.hero-arrow--prev { left: 1.5rem; }
+.hero-arrow--next { right: 1.5rem; }
+/* Dots */
+.hero-dots {
+position: absolute;
+bottom: 1rem;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: .5rem;
+z-index: 10;
+    }
+.hero-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: rgba(255,255,255,.35);
+border: none;
+cursor: pointer;
+padding: 0;
+transition: background .2s, transform .2s;
+    }
+.hero-dot.active {
+background: #fff;
+transform: scale(1.25);
+    }
+/* =============================================
+       UTILITAIRES SECTIONS
+    ============================================= */
+.section { padding: var(--space-lg) var(--space-sm); }
+.section__inner { max-width: 1280px; margin: 0 auto; }
+.section__header { margin-bottom: var(--space-md); }
+.section__title  { font-size: 1.3rem; font-weight: 700; }
+.section__subtitle { font-size: .85rem; color: var(--color-text-light); margin-top: .25rem; }
+/* =============================================
+       DIVIDERS ORIGINAUX
+    ============================================= */
+.divider {
+position: relative;
+margin: 0;
+overflow: visible;
+line-height: 0;
+    }
+/* Gradient accent */
+.divider--gradient {
+height: 3px;
+background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-accent) 100%);
+    }
+/* Triple dots avec lignes */
+.divider--dots {
+display: flex;
+align-items: center;
+height: 28px;
+background: var(--color-bg);
+padding: 0 var(--space-sm);
+    }
+.divider--dots::before,
+.divider--dots::after {
+content: '';
+flex: 1;
+height: 1px;
+background: var(--color-border);
+    }
+.divider__dots-inner {
+display: flex;
+align-items: center;
+gap: 7px;
+padding: 0 18px;
+    }
+.divider__dot {
+border-radius: 50%;
+background: var(--color-blue-light);
+flex-shrink: 0;
+    }
+.divider__dot--sm  { width: 5px; height: 5px; }
+.divider__dot--md  { width: 8px; height: 8px; background: var(--color-accent); }
+/* Vague SVG */
+.divider--wave {
+height: 36px;
+background: #fff;
+line-height: 0;
+    }
+.divider--wave svg { width: 100%; height: 36px; display: block; }
+/* Diamant centré */
+.divider--diamond {
+display: flex;
+align-items: center;
+height: 28px;
+background: var(--color-bg);
+padding: 0 var(--space-sm);
+    }
+.divider--diamond::before {
+content: '';
+flex: 1;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(--color-blue-light));
+    }
+.divider--diamond::after {
+content: '';
+flex: 1;
+height: 1px;
+background: linear-gradient(270deg, transparent, var(--color-blue-light));
+    }
+.divider__diamond {
+width: 10px; height: 10px;
+background: var(--color-blue);
+transform: rotate(45deg);
+margin: 0 14px;
+flex-shrink: 0;
+    }
+/* Slash triple */
+.divider--slash {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 28px;
+gap: 5px;
+background: #fff;
+    }
+.divider__slash {
+display: block;
+width: 2px;
+background: var(--color-border);
+transform: skewX(-22deg);
+    }
+.divider__slash--sm  { height: 16px; }
+.divider__slash--lg  { height: 24px; background: var(--color-blue-light); }
+/* =============================================
+       SLIDERS COMMUNS
+    ============================================= */
+.slider-section { padding: var(--space-lg) var(--space-sm); }
+.slider-section .section__inner { max-width: 1280px; margin: 0 auto; }
+.slider-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: var(--space-md);
+    }
+.slider-controls { display: flex; align-items: center; gap: var(--space-xs); }
+.slider-btn {
+width: 36px; height: 36px;
+border-radius: 50%;
+border: 1.5px solid var(--color-border);
+background: var(--color-primary);
+cursor: pointer;
+display: flex; align-items: center; justify-content: center;
+color: var(--color-text);
+transition: border-color .2s, background .2s, color .2s;
+    }
+.slider-btn:hover:not(:disabled) { border-color: var(--color-blue); color: var(--color-blue); }
+.slider-btn:disabled { opacity: .35; cursor: not-allowed; }
+.slider-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.slider-viewport { overflow: hidden; }
+.slider-track {
+display: flex;
+gap: var(--space-sm);
+transition: transform .35s ease;
+will-change: transform;
+    }
+.slide { flex: 0 0 calc(25% - 10px); min-width: 0; }
+/* =============================================
+       BROCHURES
+    ============================================= */
+.brochures-section { background: #fff; }
+.brochure-card {
+border: 1px solid var(--color-border);
+border-radius: var(--radius);
+overflow: hidden;
+background: var(--color-primary);
+box-shadow: var(--shadow);
+transition: box-shadow .2s;
+    }
+.brochure-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.brochure-card__cover {
+height: 210px;
+background-color: var(--color-placeholder);
+overflow: hidden;
+    }
+.brochure-card__cover img { width: 100%; height: 100%; object-fit: cover; background-color: var(--color-placeholder); }
+.brochure-card__body {
+padding: var(--space-sm);
+display: flex;
+flex-direction: column;
+gap: var(--space-xs);
+    }
+.brochure-card__title { font-size: .9rem; font-weight: 600; color: var(--color-text); }
+.btn-download {
+display: inline-block;
+align-self: flex-start;
+font-family: var(--font-main);
+font-size: .8rem;
+font-weight: 500;
+color: var(--color-blue);
+border: 1.5px solid var(--color-blue);
+border-radius: var(--radius);
+padding: .3rem .8rem;
+transition: background .2s, color .2s;
+cursor: pointer;
+background: transparent;
+    }
+.btn-download:hover { background: var(--color-blue); color: #fff; }
+/* =============================================
+       PROMOTIONS
+    ============================================= */
+.promos-section {
+background: var(--color-bg);
+padding: var(--space-xl) var(--space-sm);
+    }
+.promos-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: var(--space-sm);
+    }
+.promo-card {
+background: #fff;
+border-radius: var(--radius);
+overflow: hidden;
+box-shadow: 0 4px 16px rgba(0,0,0,.18);
+transition: transform .2s;
+    }
+.promo-card:hover { transform: translateY(-3px); }
+.promo-card__img {
+height: 150px;
+background-color: var(--color-placeholder);
+position: relative;
+overflow: hidden;
+    }
+.promo-card__img img { width: 100%; height: 100%; object-fit: cover; background-color: var(--color-placeholder); }
+.promo-badge {
+position: absolute;
+top: 8px; left: 8px;
+background: var(--color-accent);
+color: #fff;
+font-size: .68rem;
+font-weight: 700;
+padding: .2rem .5rem;
+border-radius: 3px;
+z-index: 1;
+    }
+.promo-card__body  { padding: var(--space-sm); }
+.promo-card__name  { font-size: .88rem; font-weight: 600; margin-bottom: var(--space-xs); }
+.promo-card__prices { display: flex; align-items: center; gap: .5rem; }
+.price-old { font-size: .82rem; color: var(--color-text-light); text-decoration: line-through; }
+.price-new { font-size: 1rem; font-weight: 700; color: var(--color-blue); }
+/* =============================================
+       NOUVEAUTÉS
+    ============================================= */
+.nouveautes-section { background: #fff; }
+.products-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: var(--space-sm);
+    }
+.product-card {
+background: var(--color-bg);
+border: 1px solid var(--color-border);
+border-radius: var(--radius);
+overflow: hidden;
+transition: box-shadow .2s, transform .2s;
+    }
+.product-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.product-card__img { height: 170px; background-color: var(--color-placeholder); overflow: hidden; }
+.product-card__img img { width: 100%; height: 100%; object-fit: cover; background-color: var(--color-placeholder); }
+.product-card__body   { padding: var(--space-sm); }
+.product-card__brand  { font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .8px; color: var(--color-blue); margin-bottom: .2rem; }
+.product-card__name   { font-size: .88rem; font-weight: 500; margin-bottom: var(--space-xs); }
+.product-card__price  { font-size: .95rem; font-weight: 700; }
+.product-card__footer { padding: 0 var(--space-sm) var(--space-sm); }
+.btn-add {
+width: 100%;
+background: var(--color-blue);
+color: #fff;
+border: none;
+border-radius: var(--radius);
+padding: .5rem;
+font-family: var(--font-main);
+font-size: .82rem;
+font-weight: 500;
+cursor: pointer;
+transition: background .2s;
+    }
+.btn-add:hover { background: var(--color-navy); }
+/* =============================================
+       MARQUES RÉFÉRENCÉES
+    ============================================= */
+.brands-section {
+padding: var(--space-lg) var(--space-sm);
+background: #fff;
+border-top: 1px solid var(--color-border);
+border-bottom: 1px solid var(--color-border);
+    }
+.brands-section .section__title { text-align: center; margin-bottom: var(--space-md); }
+.brands-grid {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: var(--space-lg);
+    }
+.brand-item {
+font-size: 1rem;
+font-weight: 700;
+color: #C0C0C0;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+transition: color .2s;
+    }
+.brand-item:hover { color: var(--color-text-light); }
+/* =============================================
+       FORMATIONS
+    ============================================= */
+.formations-section { background: var(--color-bg); }
+.formation-card {
+border-radius: var(--radius);
+overflow: hidden;
+background: var(--color-navy);
+box-shadow: var(--shadow);
+transition: box-shadow .2s, transform .2s;
+display: flex;
+flex-direction: column;
+    }
+.formation-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+.formation-card__img-wrap { height: 160px; background-color: var(--color-placeholder); overflow: hidden; flex-shrink: 0; }
+.formation-card__img-wrap img { width: 100%; height: 100%; object-fit: cover; background-color: var(--color-placeholder); }
+.formation-card__body {
+padding: var(--space-sm);
+display: flex;
+flex-direction: column;
+gap: var(--space-xs);
+flex: 1;
+    }
+.formation-card__title { font-size: .92rem; font-weight: 700; color: #fff; }
+.formation-card__meta  { font-size: .78rem; color: rgba(255,255,255,.55); }
+.btn-outline-white {
+display: inline-block;
+align-self: flex-start;
+margin-top: auto;
+font-family: var(--font-main);
+font-size: .8rem;
+font-weight: 500;
+color: rgba(255,255,255,.9);
+border: 1.5px solid rgba(255,255,255,.45);
+border-radius: var(--radius);
+padding: .3rem .8rem;
+transition: border-color .2s, color .2s;
+cursor: pointer;
+    }
+.btn-outline-white:hover { border-color: #fff; color: #fff; }
+/* =============================================
+       TRUST STRIP — juste avant le footer
+    ============================================= */
+.trust-strip {
+background: var(--color-bg);
+border-top: 1px solid var(--color-border);
+border-bottom: 1px solid var(--color-border);
+    }
+.trust-strip__inner {
+max-width: 1280px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+    }
+.trust-item {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: var(--space-sm);
+padding: var(--space-md) var(--space-lg);
+font-size: 14px;
+color: #333333;
+    }
+.trust-item + .trust-item { border-left: 1px solid var(--color-border); }
+.trust-item__icon { flex-shrink: 0; width: 36px; height: 36px; color: var(--color-navy); }
+.trust-item__icon svg { width: 100%; height: 100%; }
+.trust-item__text { line-height: 1.45; }
+/* =============================================
+       FOOTER — même bleu que la topbar
+    ============================================= */
+footer {
+background: var(--color-blue);
+color: rgba(255,255,255,.8);
+padding: var(--space-md) var(--space-sm) var(--space-sm);
+border-top: 3px solid var(--color-blue-hover);
+    }
+.footer__inner { max-width: 1280px; margin: 0 auto; }
+.footer__grid {
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 1fr;
+gap: var(--space-md);
+margin-bottom: var(--space-sm);
+    }
+.footer__brand { margin-bottom: var(--space-sm); }
+.footer__desc  { font-size: .83rem; line-height: 1.7; margin-bottom: var(--space-sm); }
+.footer__socials { display: flex; gap: var(--space-sm); }
+.footer__socials a {
+width: 34px; height: 34px;
+background: rgba(255,255,255,.12);
+border: 1px solid rgba(255,255,255,.25);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: .78rem; font-weight: 700;
+color: #fff;
+transition: background .2s, border-color .2s;
+    }
+.footer__socials a:hover { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.5); }
+.footer__col h4 {
+font-size: .75rem;
+font-weight: 600;
+color: rgba(255,255,255,.95);
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: var(--space-sm);
+padding-bottom: .4rem;
+border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+.footer__col ul { display: flex; flex-direction: column; gap: .45rem; }
+.footer__col ul li a { font-size: .83rem; color: rgba(255,255,255,.65); transition: color .2s; }
+.footer__col ul li a:hover { color: #fff; }
+.footer__photo { display: none; }
+.footer__bottom {
+border-top: 1px solid rgba(255,255,255,.15);
+padding-top: var(--space-sm);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: var(--space-xs);
+font-size: .75rem;
+color: rgba(255,255,255,.45);
+    }
+/* =============================================
+       RESPONSIVE — TABLETTE (≤ 1024px)
+    ============================================= */
+@media (max-width: 1024px) {
+.categories-grid,
+.promos-grid,
+.products-grid { grid-template-columns: repeat(2, 1fr); }
+.footer__grid  { grid-template-columns: 1fr 1fr; }
+.navbar__nav   { gap: var(--space-sm); }
+.slide         { flex: 0 0 calc(50% - 8px); }
+.trust-strip__inner { grid-template-columns: 1fr; }
+.trust-item + .trust-item { border-left: none; border-top: 1px solid var(--color-border); }
+    }
+/* =============================================
+       RESPONSIVE — MOBILE (≤ 768px)
+    ============================================= */
+@media (max-width: 768px) {
+.topbar { display: none; }
+.navbar__nav, .search-form, .btn-track { display: none; }
+.hamburger { display: flex; }
+.search-mobile-btn { display: flex; align-items: center; }
+.hero-slide { min-height: 320px; padding: var(--space-lg) var(--space-sm); }
+.hero-arrow { display: none; }
+.footer__grid { grid-template-columns: 1fr; }
+.footer__bottom { flex-direction: column; text-align: center; }
+.slider-viewport { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.slider-track { transform: none !important; }
+.slide { scroll-snap-align: center; flex: 0 0 calc(100vw - 2rem); }
+.slider-controls { display: none; }
+.trust-strip__inner { grid-template-columns: 1fr; }
+.trust-item { justify-content: flex-start; padding: var(--space-sm) var(--space-md); }
+.trust-item + .trust-item { border-left: none; border-top: 1px solid var(--color-border); }
+    }
+@media (max-width: 480px) {
+.categories-grid,
+.promos-grid,
+.products-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header>
+<div class="topbar">
+<div class="topbar__inner">
+<span class="topbar__info">Vente exclusive aux professionnels — N° SIRET requis à l'inscription</span>
+<div class="topbar__links">
+<a href="#">Créer un compte professionnel</a>
+<a href="#">Se connecter</a>
+</div>
+</div>
+</div>
+<nav class="navbar" aria-label="Navigation principale">
+<!-- Logo Maison Delorme -->
+<a href="/" class="navbar__logo" aria-label="Maison Delorme — Accueil">
+<img src="/logo.png" alt="Maison Delorme — Coiffure | Barbe | Beauté">
+</a>
+<ul class="navbar__nav" role="list">
+<li><a href="#">Coiffure</a></li>
+<li><a href="#">Barbe</a></li>
+<li><a href="#">Beauté</a></li>
+<li><a href="#" class="nav-promo">Promotions</a></li>
+<li><a href="#">Nouveautés</a></li>
+<li><a href="#">Où nous trouver</a></li>
+</ul>
+<div class="navbar__actions">
+<form class="search-form" role="search" aria-label="Recherche produit">
+<input type="search" placeholder="Rechercher un produit…" aria-label="Rechercher un produit">
+<button type="submit" aria-label="Lancer la recherche">
+<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+</svg>
+</button>
+</form>
+<button class="btn-track" type="button">Suivre ma commande</button>
+<button class="cart-btn" type="button" aria-label="Panier — 3 articles">
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/>
+</svg>
+<span class="cart-badge" aria-hidden="true">3</span>
+</button>
+<button class="search-mobile-btn" id="search-mobile-btn" type="button" aria-label="Rechercher" aria-expanded="false">
+<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+</svg>
+</button>
+<button class="hamburger" id="hamburger-btn" type="button"
+aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+<!-- Barre recherche mobile -->
+<div class="mobile-search-bar" id="mobile-search-bar">
+<form class="search-form" role="search" aria-label="Recherche produit">
+<input type="search" placeholder="Rechercher un produit…" aria-label="Rechercher un produit" id="mobile-search-input">
+<button type="submit" aria-label="Lancer la recherche">
+<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+</svg>
+</button>
+</form>
+</div>
+<!-- Menu mobile -->
+<div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Menu mobile">
+<a href="#">Coiffure</a>
+<a href="#">Barbe</a>
+<a href="#">Beauté</a>
+<a href="#" class="nav-promo">Promotions</a>
+<a href="#">Nouveautés</a>
+<a href="#">Où nous trouver</a>
+<div class="mobile-actions">
+<form class="search-form" role="search">
+<input type="search" placeholder="Rechercher un produit…" aria-label="Rechercher">
+<button type="submit" aria-label="Rechercher">
+<svg viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+</svg>
+</button>
+</form>
+<button class="btn-track" type="button">Suivre ma commande</button>
+</div>
+</div>
+</header>
+<!-- ============================================================
+     MAIN
+============================================================ -->
+<main>
+<!-- HERO CAROUSEL -->
+<section class="hero-carousel" aria-label="Bannière principale" id="hero-carousel">
+<div class="hero-track" id="hero-track">
+<!-- Slide 1 -->
+<div class="hero-slide hero-slide--1">
+<!-- REMPLACER : src="..." par le chemin de votre image hero -->
+<img src="PLACEHOLDER_HERO_1.jpg" alt="Maison Delorme — fournitures professionnelles" class="hero-slide__bg">
+<div class="hero-slide__inner">
+<span class="hero__tag">Espace professionnel</span>
+<h1 class="hero__title">Fournitures professionnelles pour salons, barbiers et instituts</h1>
+<p class="hero__subtitle">Plus de 2 800 références coiffure, barbe et beauté. Tarifs grossiste, commande en quantité, livraison sous 48 h.</p>
+<a href="#" class="btn-cta">Accéder au catalogue</a>
+</div>
+</div>
+<!-- Slide 2 -->
+<div class="hero-slide hero-slide--2">
+<!-- REMPLACER : src="..." par le chemin de votre image hero -->
+<img src="PLACEHOLDER_HERO_2.jpg" alt="Offres tarifaires en cours" class="hero-slide__bg">
+<div class="hero-slide__inner">
+<span class="hero__tag">Offres en cours</span>
+<h1 class="hero__title">Remises jusqu'à −30 % sur une sélection de produits</h1>
+<p class="hero__subtitle">Shampooings, outillage, soins — offres valables jusqu'au 31 mars 2026. Stock limité.</p>
+<a href="#" class="btn-cta">Voir les promotions</a>
+</div>
+</div>
+<!-- Slide 3 -->
+<div class="hero-slide hero-slide--3">
+<!-- REMPLACER : src="..." par le chemin de votre image hero -->
+<img src="PLACEHOLDER_HERO_3.jpg" alt="Formations professionnelles Maison Delorme" class="hero-slide__bg">
+<div class="hero-slide__inner">
+<span class="hero__tag">Formations</span>
+<h1 class="hero__title">Développez vos compétences avec nos formations métier</h1>
+<p class="hero__subtitle">Coupe, barbe, coloration, soins — formations animées par des professionnels à Croissy-Beaubourg et en régions.</p>
+<a href="#" class="btn-cta">Voir les formations</a>
+</div>
+</div>
+</div>
+<!-- Flèches -->
+<button class="hero-arrow hero-arrow--prev" id="hero-prev" aria-label="Slide précédent">
+<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<button class="hero-arrow hero-arrow--next" id="hero-next" aria-label="Slide suivant">
+<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+<!-- Dots -->
+<div class="hero-dots" id="hero-dots" role="tablist" aria-label="Slides">
+<button class="hero-dot active" data-index="0" aria-label="Slide 1" aria-selected="true"></button>
+<button class="hero-dot" data-index="1" aria-label="Slide 2" aria-selected="false"></button>
+<button class="hero-dot" data-index="2" aria-label="Slide 3" aria-selected="false"></button>
+</div>
+</section>
+<!-- divider gradient après hero -->
+<div class="divider divider--gradient" aria-hidden="true"></div>
+<!-- NOUVELLES RÉFÉRENCES -->
+<section class="slider-section nouveautes-section" aria-labelledby="nouveautes-title">
+<div class="section__inner">
+<div class="slider-header">
+<div class="section__header" style="margin-bottom:0">
+<h2 class="section__title" id="nouveautes-title">Nouvelles références catalogue</h2>
+<p class="section__subtitle">Produits récemment référencés — prix HT, hors frais de port</p>
+</div>
+<div class="slider-controls">
+<button class="slider-btn slider-btn--prev" data-slider="nouveautes" aria-label="Précédent" disabled>
+<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<button class="slider-btn slider-btn--next" data-slider="nouveautes" aria-label="Suivant">
+<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+</div>
+</div>
+<div class="slider-viewport" id="slider-nouveautes">
+<div class="slider-track" id="track-nouveautes">
+<div class="slide"><article class="product-card">
+<div class="product-card__img"><img src="PLACEHOLDER_PRODUIT_1.jpg" alt="Sérum réparateur kératine 250 ml"></div>
+<div class="product-card__body"><p class="product-card__brand">L'Oréal Pro</p><p class="product-card__name">Sérum réparateur kératine 250 ml</p><p class="product-card__price">14,90 € HT</p></div>
+<div class="product-card__footer"><button class="btn-add" type="button">Commander</button></div>
+</article></div>
+<div class="slide"><article class="product-card">
+<div class="product-card__img"><img src="PLACEHOLDER_PRODUIT_2.jpg" alt="Tondeuse professionnelle sans fil"></div>
+<div class="product-card__body"><p class="product-card__brand">Wahl</p><p class="product-card__name">Tondeuse professionnelle sans fil</p><p class="product-card__price">89,00 € HT</p></div>
+<div class="product-card__footer"><button class="btn-add" type="button">Commander</button></div>
+</article></div>
+<div class="slide"><article class="product-card">
+<div class="product-card__img"><img src="PLACEHOLDER_PRODUIT_3.jpg" alt="Après-shampoing nutrition intense 1 L"></div>
+<div class="product-card__body"><p class="product-card__brand">Kérastase</p><p class="product-card__name">Après-shampoing nutrition intense 1 L</p><p class="product-card__price">22,50 € HT</p></div>
+<div class="product-card__footer"><button class="btn-add" type="button">Commander</button></div>
+</article></div>
+<div class="slide"><article class="product-card">
+<div class="product-card__img"><img src="PLACEHOLDER_PRODUIT_4.jpg" alt="Sèche-cheveux ionique 2300 W"></div>
+<div class="product-card__body"><p class="product-card__brand">BaByliss Pro</p><p class="product-card__name">Sèche-cheveux ionique 2300 W</p><p class="product-card__price">67,00 € HT</p></div>
+<div class="product-card__footer"><button class="btn-add" type="button">Commander</button></div>
+</article></div>
+</div>
+</div>
+</div>
+</section>
+<!-- divider triple dots après nouveautés -->
+<div class="divider divider--dots" aria-hidden="true">
+<div class="divider__dots-inner">
+<span class="divider__dot divider__dot--sm"></span>
+<span class="divider__dot divider__dot--md"></span>
+<span class="divider__dot divider__dot--sm"></span>
+</div>
+</div>
+<!-- OFFRES TARIFAIRES EN COURS -->
+<section class="slider-section promos-section" aria-labelledby="promos-title">
+<div class="section__inner">
+<div class="slider-header">
+<div class="section__header" style="margin-bottom:0">
+<h2 class="section__title" id="promos-title">Offres tarifaires en cours</h2>
+<p class="section__subtitle">Remises valables jusqu'au 31 mars 2026 — stock limité. Prix affichés HT.</p>
+</div>
+<div class="slider-controls">
+<button class="slider-btn slider-btn--prev" data-slider="promos" aria-label="Précédent" disabled>
+<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<button class="slider-btn slider-btn--next" data-slider="promos" aria-label="Suivant">
+<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+</div>
+</div>
+<div class="slider-viewport" id="slider-promos">
+<div class="slider-track" id="track-promos">
+<div class="slide"><article class="promo-card">
+<div class="promo-card__img"><span class="promo-badge">−30%</span><img src="PLACEHOLDER_PROMO_1.jpg" alt="Shampoing professionnel 5 L"></div>
+<div class="promo-card__body"><p class="promo-card__name">Shampoing professionnel 5 L</p><div class="promo-card__prices"><span class="price-old">24,90 € HT</span><span class="price-new">17,43 € HT</span></div></div>
+</article></div>
+<div class="slide"><article class="promo-card">
+<div class="promo-card__img"><span class="promo-badge">−20%</span><img src="PLACEHOLDER_PROMO_2.jpg" alt="Ciseaux de coupe acier inox"></div>
+<div class="promo-card__body"><p class="promo-card__name">Ciseaux de coupe acier inox</p><div class="promo-card__prices"><span class="price-old">38,00 € HT</span><span class="price-new">30,40 € HT</span></div></div>
+</article></div>
+<div class="slide"><article class="promo-card">
+<div class="promo-card__img"><span class="promo-badge">−15%</span><img src="PLACEHOLDER_PROMO_3.jpg" alt="Rasoir barbier manche bois"></div>
+<div class="promo-card__body"><p class="promo-card__name">Rasoir barbier manche bois</p><div class="promo-card__prices"><span class="price-old">22,00 € HT</span><span class="price-new">18,70 € HT</span></div></div>
+</article></div>
+<div class="slide"><article class="promo-card">
+<div class="promo-card__img"><span class="promo-badge">−25%</span><img src="PLACEHOLDER_PROMO_4.jpg" alt="Masque soin intensif 500 ml"></div>
+<div class="promo-card__body"><p class="promo-card__name">Masque soin intensif 500 ml</p><div class="promo-card__prices"><span class="price-old">18,50 € HT</span><span class="price-new">13,87 € HT</span></div></div>
+</article></div>
+</div>
+</div>
+</div>
+</section>
+<div class="divider divider--gradient" aria-hidden="true"></div>
+<!-- BROCHURES & CATALOGUES -->
+<section class="slider-section brochures-section" aria-labelledby="brochures-title">
+<div class="section__inner">
+<div class="slider-header">
+<div class="section__header" style="margin-bottom:0">
+<h2 class="section__title" id="brochures-title">Nos brochures &amp; catalogues</h2>
+<p class="section__subtitle">Téléchargez nos catalogues produits et tarifs professionnels</p>
+</div>
+<div class="slider-controls">
+<button class="slider-btn slider-btn--prev" data-slider="brochures" aria-label="Précédent" disabled>
+<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<button class="slider-btn slider-btn--next" data-slider="brochures" aria-label="Suivant">
+<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+</div>
+</div>
+<div class="slider-viewport" id="slider-brochures">
+<div class="slider-track" id="track-brochures">
+<div class="slide"><article class="brochure-card">
+<div class="brochure-card__cover"><!-- REMPLACER PAR IMAGE BROCHURE --><img src="PLACEHOLDER_BROCHURE_1.jpg" alt="Catalogue Printemps–Été 2026"></div>
+<div class="brochure-card__body"><p class="brochure-card__title">Catalogue Printemps–Été 2026</p><a href="#" class="btn-download">Télécharger</a></div>
+</article></div>
+<div class="slide"><article class="brochure-card">
+<div class="brochure-card__cover"><!-- REMPLACER PAR IMAGE BROCHURE --><img src="PLACEHOLDER_BROCHURE_2.jpg" alt="Guide Tarifs Professionnels 2026"></div>
+<div class="brochure-card__body"><p class="brochure-card__title">Guide Tarifs Professionnels 2026</p><a href="#" class="btn-download">Télécharger</a></div>
+</article></div>
+<div class="slide"><article class="brochure-card">
+<div class="brochure-card__cover"><!-- REMPLACER PAR IMAGE BROCHURE --><img src="PLACEHOLDER_BROCHURE_3.jpg" alt="Catalogue Mobilier Salon"></div>
+<div class="brochure-card__body"><p class="brochure-card__title">Catalogue Mobilier Salon</p><a href="#" class="btn-download">Télécharger</a></div>
+</article></div>
+<div class="slide"><article class="brochure-card">
+<div class="brochure-card__cover"><!-- REMPLACER PAR IMAGE BROCHURE --><img src="PLACEHOLDER_BROCHURE_4.jpg" alt="Catalogue Automne–Hiver 2025"></div>
+<div class="brochure-card__body"><p class="brochure-card__title">Catalogue Automne–Hiver 2025</p><a href="#" class="btn-download">Télécharger</a></div>
+</article></div>
+<div class="slide"><article class="brochure-card">
+<div class="brochure-card__cover"><!-- REMPLACER PAR IMAGE BROCHURE --><img src="PLACEHOLDER_BROCHURE_5.jpg" alt="Catalogue Soins &amp; Beauté"></div>
+<div class="brochure-card__body"><p class="brochure-card__title">Catalogue Soins &amp; Beauté</p><a href="#" class="btn-download">Télécharger</a></div>
+</article></div>
+</div>
+</div>
+</div>
+</section>
+<!-- divider diamant -->
+<div class="divider divider--diamond" aria-hidden="true">
+<span class="divider__diamond"></span>
+</div>
+<!-- MARQUES RÉFÉRENCÉES —avant les formations -->
+<section class="brands-section" aria-labelledby="brands-title">
+<div class="section__inner">
+<h2 class="section__title" id="brands-title">Marques référencées</h2>
+<div class="brands-grid">
+<span class="brand-item">L'Oréal Pro</span>
+<span class="brand-item">Wahl</span>
+<span class="brand-item">Kérastase</span>
+<span class="brand-item">BaByliss</span>
+<span class="brand-item">Revlon Pro</span>
+<span class="brand-item">Schwarzkopf</span>
+<span class="brand-item">Andis</span>
+<span class="brand-item">Redken</span>
+</div>
+</div>
+</section>
+<!-- divider slash après brands -->
+<div class="divider divider--slash" aria-hidden="true">
+<span class="divider__slash divider__slash--sm"></span>
+<span class="divider__slash divider__slash--lg"></span>
+<span class="divider__slash divider__slash--sm"></span>
+</div>
+<!-- NOS PROCHAINES FORMATIONS ET ÉVÉNEMENTS -->
+<section class="slider-section formations-section" aria-labelledby="formations-title">
+<div class="section__inner">
+<div class="slider-header">
+<div class="section__header" style="margin-bottom:0">
+<h2 class="section__title" id="formations-title">Nos prochaines formations et événements</h2>
+<p class="section__subtitle">Formations techniques et événements métier animés par nos partenaires</p>
+</div>
+<div class="slider-controls">
+<button class="slider-btn slider-btn--prev" data-slider="formations" aria-label="Précédent" disabled>
+<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<button class="slider-btn slider-btn--next" data-slider="formations" aria-label="Suivant">
+<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+</div>
+</div>
+<div class="slider-viewport" id="slider-formations">
+<div class="slider-track" id="track-formations">
+<div class="slide"><article class="formation-card">
+<div class="formation-card__img-wrap"><!-- REMPLACER PAR IMAGE FORMATION --><img src="PLACEHOLDER_FORMATION_1.jpg" alt="Coupe homme tendance"></div>
+<div class="formation-card__body"><h3 class="formation-card__title">Coupe homme tendance</h3><p class="formation-card__meta">12 avril 2026 — Croissy-Beaubourg</p><a href="#" class="btn-outline-white">En savoir +</a></div>
+</article></div>
+<div class="slide"><article class="formation-card">
+<div class="formation-card__img-wrap"><!-- REMPLACER PAR IMAGE FORMATION --><img src="PLACEHOLDER_FORMATION_2.jpg" alt="Initiation taille de barbe"></div>
+<div class="formation-card__body"><h3 class="formation-card__title">Initiation taille de barbe</h3><p class="formation-card__meta">26 avril 2026 — Croissy-Beaubourg</p><a href="#" class="btn-outline-white">En savoir +</a></div>
+</article></div>
+<div class="slide"><article class="formation-card">
+<div class="formation-card__img-wrap"><!-- REMPLACER PAR IMAGE FORMATION --><img src="PLACEHOLDER_FORMATION_3.jpg" alt="Techniques de coloration avancées"></div>
+<div class="formation-card__body"><h3 class="formation-card__title">Techniques de coloration avancées</h3><p class="formation-card__meta">10 mai 2026 — Paris 11e</p><a href="#" class="btn-outline-white">En savoir +</a></div>
+</article></div>
+<div class="slide"><article class="formation-card">
+<div class="formation-card__img-wrap"><!-- REMPLACER PAR IMAGE FORMATION --><img src="PLACEHOLDER_FORMATION_4.jpg" alt="Soin kératine lissage professionnel"></div>
+<div class="formation-card__body"><h3 class="formation-card__title">Soin kératine — lissage professionnel</h3><p class="formation-card__meta">17 mai 2026 — Croissy-Beaubourg</p><a href="#" class="btn-outline-white">En savoir +</a></div>
+</article></div>
+<div class="slide"><article class="formation-card">
+<div class="formation-card__img-wrap"><!-- REMPLACER PAR IMAGE FORMATION --><img src="PLACEHOLDER_FORMATION_5.jpg" alt="Maquillage semi-permanent"></div>
+<div class="formation-card__body"><h3 class="formation-card__title">Maquillage semi-permanent</h3><p class="formation-card__meta">7 juin 2026 — Lyon</p><a href="#" class="btn-outline-white">En savoir +</a></div>
+</article></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- TRUST STRIP — juste avant le footer -->
+<section class="trust-strip" aria-label="Nos engagements">
+<div class="trust-strip__inner">
+<div class="trust-item">
+<div class="trust-item__icon" aria-hidden="true">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+</svg>
+</div>
+<p class="trust-item__text">Livraison express gratuite en France métropolitaine à partir de 90&nbsp;€ HT. Pour le mobilier, nous consulter.</p>
+</div>
+<div class="trust-item">
+<div class="trust-item__icon" aria-hidden="true">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+</svg>
+</div>
+<p class="trust-item__text">Paiement sécurisé</p>
+</div>
+<div class="trust-item">
+<div class="trust-item__icon" aria-hidden="true">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.09 4.18 2 2 0 015.07 2h3a2 2 0 012 1.72c.13 1 .37 1.97.72 2.9a2 2 0 01-.45 2.11L9.09 9.91a16 16 0 006.99 7l1.18-1.18a2 2 0 012.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0122 16.92z"/>
+</svg>
+</div>
+<p class="trust-item__text">Besoin d'informations&nbsp;? <strong>+33 1 41 95 51 00</strong></p>
+</div>
+</div>
+</section>
+<!-- ============================================================
+     FOOTER — même bleu que la topbar (#005CA4)
+============================================================ -->
+<footer>
+<div class="footer__inner">
+<div class="footer__grid">
+<div class="footer__col">
+<div class="footer__brand">
+<img src="/logo.png" alt="Maison Delorme — Coiffure | Barbe | Beauté" style="height:52px;width:auto;filter:brightness(0) invert(1);">
+</div>
+<p class="footer__desc">Votre partenaire de confiance pour l'approvisionnement de fournitures professionnelles coiffure, barbe et beauté depuis 2005.</p>
+<div class="footer__socials">
+<a href="#" aria-label="Facebook">f</a>
+<a href="#" aria-label="Instagram">ig</a>
+<a href="#" aria-label="LinkedIn">in</a>
+</div>
+</div>
+<div class="footer__col">
+<h4>Catalogue</h4>
+<ul>
+<li><a href="#">Coiffure</a></li>
+<li><a href="#">Barbe</a></li>
+<li><a href="#">Beauté</a></li>
+<li><a href="#">Accessoires</a></li>
+<li><a href="#">Promotions</a></li>
+</ul>
+</div>
+<div class="footer__col">
+<h4>Mon compte</h4>
+<ul>
+<li><a href="#">Se connecter</a></li>
+<li><a href="#">Créer un compte professionnel</a></li>
+<li><a href="#">Historique de commandes</a></li>
+<li><a href="#">Suivre une livraison</a></li>
+<li><a href="#">Demander un devis</a></li>
+</ul>
+</div>
+<div class="footer__col">
+<h4>Contact</h4>
+<ul>
+<li><a href="tel:+33141955100">+33 1 41 95 51 00</a></li>
+<li><a href="#">contact@maison-delorme.fr</a></li>
+<li><a href="#">Lun–Ven : 8h–18h</a></li>
+<li><a href="#">Où nous trouver</a></li>
+<li><a href="#">FAQ</a></li>
+</ul>
+</div>
+</div>
+<div class="footer__photo">
+<img src="/Users/hugo/Desktop/delorme/001_302429824_3399575446979199_1776558323574900691_n.jpg" alt="">
+</div>
+<div class="footer__bottom">
+<p>© 2026 Maison Delorme. Tous droits réservés.</p>
+<nav aria-label="Liens légaux">
+<a href="#">Mentions légales</a> &nbsp;·&nbsp;
+<a href="#">CGV</a> &nbsp;·&nbsp;
+<a href="#">Politique de confidentialité</a>
+</nav>
+</div>
+</div>
+</footer>
+<!-- ============================================================
+     JS
+============================================================ -->
+<script>
+/* --- Menu hamburger --- */
+document.getElementById('hamburger-btn').addEventListener('click', function() {
+const nav = document.getElementById('mobile-nav');
+const open = nav.classList.toggle('open');
+this.setAttribute('aria-expanded', open);
+  });
+/* --- Recherche mobile --- */
+document.getElementById('search-mobile-btn').addEventListener('click', function() {
+const bar = document.getElementById('mobile-search-bar');
+const open = bar.classList.toggle('open');
+this.setAttribute('aria-expanded', open);
+if (open) document.getElementById('mobile-search-input').focus();
+  });
+/* --- Hero carousel --- */
+  (function() {
+const track  = document.getElementById('hero-track');
+const slides = track.querySelectorAll('.hero-slide');
+const dots   = document.querySelectorAll('.hero-dot');
+const btnPrev = document.getElementById('hero-prev');
+const btnNext = document.getElementById('hero-next');
+let current = 0;
+let autoTimer;
+function goTo(index) {
+current = (index + slides.length) % slides.length;
+track.style.transform = 'translateX(-' + (current * 100) + '%)';
+dots.forEach(function(d, i) {
+d.classList.toggle('active', i === current);
+d.setAttribute('aria-selected', i === current);
+      });
+    }
+function startAuto() {
+autoTimer = setInterval(function() { goTo(current + 1); }, 5000);
+    }
+function resetAuto() {
+clearInterval(autoTimer);
+startAuto();
+    }
+btnPrev.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
+btnNext.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
+dots.forEach(function(d) {
+d.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); resetAuto(); });
+    });
+/* Swipe tactile hero */
+var touchStartX = 0;
+track.addEventListener('touchstart', function(e) {
+touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+track.addEventListener('touchend', function(e) {
+var diff = touchStartX - e.changedTouches[0].clientX;
+if (Math.abs(diff) > 40) {
+goTo(diff > 0 ? current + 1 : current - 1);
+resetAuto();
+      }
+    }, { passive: true });
+startAuto();
+  })();
+/* --- Sliders brochures & formations ---
+   * Calcule le décalage d'un slide (largeur + gap) et applique translateX.
+   * Sur mobile (≤ 768px) le scroll CSS natif prend le relais.
+   */
+function initSlider(trackId, btnPrev, btnNext) {
+const track  = document.getElementById(trackId);
+const slides = track.querySelectorAll('.slide');
+let index = 0;
+function visibleCount() {
+if (window.innerWidth < 768)  return 1;
+if (window.innerWidth < 1024) return 2;
+return 4;
+    }
+function update() {
+if (window.innerWidth < 768) return; /* scroll natif sur mobile */
+const max = Math.max(0, slides.length - visibleCount());
+index = Math.max(0, Math.min(index, max));
+var gap = parseInt(getComputedStyle(track).gap) || 14;
+var w   = slides[0].offsetWidth + gap;
+track.style.transform = 'translateX(-' + (index * w) + 'px)';
+btnPrev.disabled = (index === 0);
+btnNext.disabled = (index >= max);
+    }
+btnPrev.addEventListener('click', function() { index--; update(); });
+btnNext.addEventListener('click', function() { index++; update(); });
+window.addEventListener('resize', update);
+update();
+  }
+initSlider(
+'track-brochures',
+document.querySelector('[data-slider="brochures"].slider-btn--prev'),
+document.querySelector('[data-slider="brochures"].slider-btn--next')
+  );
+initSlider(
+'track-formations',
+document.querySelector('[data-slider="formations"].slider-btn--prev'),
+document.querySelector('[data-slider="formations"].slider-btn--next')
+  );
+initSlider(
+'track-nouveautes',
+document.querySelector('[data-slider="nouveautes"].slider-btn--prev'),
+document.querySelector('[data-slider="nouveautes"].slider-btn--next')
+  );
+initSlider(
+'track-promos',
+document.querySelector('[data-slider="promos"].slider-btn--prev'),
+document.querySelector('[data-slider="promos"].slider-btn--next')
+  );
+</script>
+</body>
+</html>
